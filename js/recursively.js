@@ -1,11 +1,11 @@
 const Fs = require('fs');
-const Path = require('path')
+const Path = require('path');
 
 const getFilesRecursively = (files, directory) => {
   // obtener archivos y subcarpetas de la carpeta
   const filesInDirectory = Fs.readdirSync(directory);
   // Iterar cada uno de los archivos de la carpeta
-  for (const file of filesInDirectory) {
+  filesInDirectory.forEach((file) => {
     // Obtener la ruya absoluta del archivo
     const absolute = Path.join(directory, file);
     // Verificar si la ruta absoluta es una carpeta o un archivo
@@ -17,13 +17,13 @@ const getFilesRecursively = (files, directory) => {
       // ****** Falta agregar validacion de que solo se agreguen archivos .md ******
       files.push(absolute);
     }
-  }
+  });
 };
 
 const getFilesWithRecursively = (path) => {
   const files = [];
   getFilesRecursively(files, path);
   return files;
-}
+};
 
 module.exports = getFilesWithRecursively;
