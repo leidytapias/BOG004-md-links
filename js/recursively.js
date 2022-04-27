@@ -8,13 +8,13 @@ const getFilesRecursively = (files, directory) => {
   filesInDirectory.forEach((file) => {
     // Obtener la ruya absoluta del archivo
     const absolute = Path.join(directory, file);
+    const extension = Path.extname(absolute);
     // Verificar si la ruta absoluta es una carpeta o un archivo
     if (Fs.statSync(absolute).isDirectory()) {
       // Si es una carpeta se vuelve a llamar la función con la ruta absoluta de esa carpeta interna
       getFilesRecursively(files, absolute);
-    } else {
-      // Si es un archivo se agrega al arreglo de archivos
-      // ****** Falta agregar validacion de que solo se agreguen archivos .md ******
+    } else if (extension === '.md') {
+      // Si es un archivo .md se agrega al arreglo de archivos
       files.push(absolute);
     }
   });
