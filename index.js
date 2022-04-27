@@ -44,6 +44,6 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
   }
 });
 
-mdLinks('./archivos/subcarpeta1', { validate: true, stats: false });
+mdLinks('./archivos', { validate: true, stats: false });
 
 module.exports = mdLinks;
