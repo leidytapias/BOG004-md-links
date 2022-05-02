@@ -34,7 +34,6 @@ const countsHref = (links) => {
 };
 
 const getPromisesHref = (links) => {
-  // let sumaRotos = 0;
   const arrayPromiseArray = [];
   links.forEach((link) => {
     arrayPromiseArray.push(axios.get(link.href));
@@ -50,6 +49,24 @@ const countsBroken = (results) => {
     }
   });
   return countsRejected;
+};
+const checkRequire = (links, results) => {
+  const linksValidated = [];
+  links.forEach((link, indexlink) => {
+    const result = results[indexlink];
+    if (result.status === 'rejected') {
+      linksValidated.push({
+        href: link.href, file: link.file, text: link.text, status: 500, ok: 'fail',
+      });
+    } else {
+      linksValidated.push({
+        href: link.href, file: link.file, text: link.text, status: result.value.status, ok: 'ok',
+      });
+    }
+  });
+  console.log('--------------------------');
+  console.log(linksValidated);
+  return linksValidated;
 };
 
 const check = (links, options) => {
@@ -70,7 +87,12 @@ const check = (links, options) => {
       };
       console.log(optsObject);
     } else if (options.validate) {
+      getPromisesHref(links).then((results) => {
+        checkRequire(links, results);
+      });
       console.log('hacer peticion HTTP para verificar');
+    } else {
+      console.log('No hay options');
     }
   }
 };
@@ -102,10 +124,10 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
 });
 
 // mdLinks('./archivos', { validate: true, stats: false });
-mdLinks('./archivos', { validate: true, stats: true });
+// mdLinks('./archivos', { validate: true, stats: true });
 // mdLinks('./archivos', { validate: false, stats: true });
 // mdLinks('./archivos', { validate: false, stats: false });
-// mdLinks('./archivos', { validate: true });
+mdLinks('./archivos', { validate: true });
 // mdLinks('./archivos', { validate: false });
 // mdLinks('./archivos', { stats: true });
 // mdLinks('./archivos', { stats: false });
