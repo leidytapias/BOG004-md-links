@@ -50,13 +50,20 @@ const countsBroken = (results) => {
   });
   return countsRejected;
 };
+
 const checkRequire = (links, results) => {
   const linksValidated = [];
   links.forEach((link, indexlink) => {
     const result = results[indexlink];
     if (result.status === 'rejected') {
+      let codeError = '';
+      if (result.reason.code !== 'ERR_BAD_REQUEST') {
+        codeError = result.reason.code;
+      } else if (result.reason.code === 'ERR_BAD_REQUEST') {
+        codeError = result.reason.response.status;
+      }
       linksValidated.push({
-        href: link.href, file: link.file, text: link.text, status: 500, ok: 'fail',
+        href: link.href, file: link.file, text: link.text, status: codeError, ok: 'fail',
       });
     } else {
       linksValidated.push({
@@ -64,12 +71,10 @@ const checkRequire = (links, results) => {
       });
     }
   });
-  console.log('--------------------------');
-  console.log(linksValidated);
   return linksValidated;
 };
 
-const check = (links, options) => {
+const check = (links, options) => new Promise((resolve) => {
   if (options !== undefined && typeof options === 'object') {
     if (options.validate && options.stats) {
       getPromisesHref(links).then((results) => {
@@ -78,24 +83,23 @@ const check = (links, options) => {
           unique: countsHref(links),
           broken: countsBroken(results),
         };
-        console.log(optsObject);
+        resolve(optsObject);
       });
     } else if (options.stats) {
       const optsObject = {
         total: links.length,
         unique: countsHref(links),
       };
-      console.log(optsObject);
+      resolve(optsObject);
     } else if (options.validate) {
       getPromisesHref(links).then((results) => {
-        checkRequire(links, results);
+        resolve(checkRequire(links, results));
       });
-      console.log('hacer peticion HTTP para verificar');
-    } else {
-      console.log('No hay options');
     }
+  } else {
+    resolve(links);
   }
-};
+});
 
 const mdLinks = (path, options) => new Promise((resolve, reject) => {
   const extension = Path.extname(path);
@@ -112,24 +116,42 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
         // Obtener los enlaces de cada archivo de la lista de archivos
         links = links.concat(getLinks(file));
       });
-      check(links, options);
+      check(links, options).then((result) => resolve(result));
     }
   } else if (extension === '.md') {
     // si la extension es igual a .md obtiene los enlaces de ese archivo md
     const links = getLinks(path);
-    check(links, options);
+    check(links, options).then((result) => resolve(result));
   } else {
     reject(Error('Envié una carpeta o un archivo .md'));
   }
 });
 
-// mdLinks('./archivos', { validate: true, stats: false });
-// mdLinks('./archivos', { validate: true, stats: true });
-// mdLinks('./archivos', { validate: false, stats: true });
-// mdLinks('./archivos', { validate: false, stats: false });
-mdLinks('./archivos', { validate: true });
-// mdLinks('./archivos', { validate: false });
-// mdLinks('./archivos', { stats: true });
-// mdLinks('./archivos', { stats: false });
-// mdLinks('./archivos');
+mdLinks('./archivos', { validate: true, stats: false }).then((links) => {
+  console.log(links);
+});
+
+// mdLinks('./archivos', { validate: true, stats: true }).then((links) => {
+//   console.log(links);
+// });
+// mdLinks('./archivos', { validate: false, stats: true }).then((links) => {
+//   console.log(links);
+// });
+// mdLinks('./archivos', { validate: false, stats: false }).then((links) => {
+//   console.log(links);
+// });
+// mdLinks('./archivos', { validate: true }).then((links) => { // console.log(links);
+// });
+// mdLinks('./archivos', { validate: false }).then((links) => {
+//   console.log(links);
+// });
+// mdLinks('./archivos', { stats: true }).then((links) => {
+//   console.log(links);
+// });
+// mdLinks('./archivos', { stats: false }).then((links) => {
+//   console.log(links);
+// });
+// mdLinks('./archivos').then((links) => {
+//   console.log(links);
+// });
 module.exports = mdLinks;

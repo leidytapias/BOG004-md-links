@@ -8,6 +8,10 @@
     "javascript",
     "jest"
   ],
+  "autor": [
+    "Leidy Yuliana Tapias Giraldo",
+    "leidytapiasgiraldo@gmail.com"
+  ],
   "license": "MIT",
   "dependencies": {
     "axios": "^0.27.2",
@@ -22,6 +26,9 @@
   },
   "scripts": {
     "eslint": "eslint --ext .js index.js js/ test/",
-    "test": "jest --env=jsdom --coverage"
+    "test": "jest"
+  },
+  "jest":{
+    "verbose": true
   }
 }
