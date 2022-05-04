@@ -129,32 +129,4 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
   }
 });
 
-// mdLinks('./archivos', { validate: true, stats: false }).then((links) => {
-//   console.log(links);
-// });
-
-// mdLinks('./archivos', { validate: true, stats: true }).then((links) => {
-//   console.log(links);
-// });
-// mdLinks('./archivos', { validate: false, stats: true }).then((links) => {
-//   console.log(links);
-// });
-// mdLinks('./archivos', { validate: false, stats: false }).then((links) => {
-//   console.log(links);
-// });
-// mdLinks('./archivos', { validate: true }).then((links) => {
-//   console.log(links);
-// });
-// mdLinks('./archivos', { validate: false }).then((links) => {
-//   console.log(links);
-// });
-// mdLinks('./archivos', { stats: true }).then((links) => {
-//   console.log(links);
-// });
-// mdLinks('./archivos', { stats: false }).then((links) => {
-//   console.log(links);
-// });
-// mdLinks('./archivos').then((links) => {
-//   console.log(links);
-// });
 module.exports = mdLinks;
