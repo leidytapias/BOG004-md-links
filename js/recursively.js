@@ -6,7 +6,7 @@ const getFilesRecursively = (files, directory) => {
   const filesInDirectory = Fs.readdirSync(directory);
   // Iterar cada uno de los archivos de la carpeta
   filesInDirectory.forEach((file) => {
-    // Obtener la ruya absoluta del archivo
+    // Obtener la ruta absoluta del archivo
     const absolute = Path.join(directory, file);
     const extension = Path.extname(absolute);
     // Verificar si la ruta absoluta es una carpeta o un archivo

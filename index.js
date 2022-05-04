@@ -95,6 +95,8 @@ const check = (links, options) => new Promise((resolve) => {
       getPromisesHref(links).then((results) => {
         resolve(checkRequire(links, results));
       });
+    } else if (options.validate === false || options.stats === false) {
+      resolve(links);
     }
   } else {
     resolve(links);
@@ -127,9 +129,9 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
   }
 });
 
-mdLinks('./archivos', { validate: true, stats: false }).then((links) => {
-  console.log(links);
-});
+// mdLinks('./archivos', { validate: true, stats: false }).then((links) => {
+//   console.log(links);
+// });
 
 // mdLinks('./archivos', { validate: true, stats: true }).then((links) => {
 //   console.log(links);
@@ -140,7 +142,8 @@ mdLinks('./archivos', { validate: true, stats: false }).then((links) => {
 // mdLinks('./archivos', { validate: false, stats: false }).then((links) => {
 //   console.log(links);
 // });
-// mdLinks('./archivos', { validate: true }).then((links) => { // console.log(links);
+// mdLinks('./archivos', { validate: true }).then((links) => {
+//   console.log(links);
 // });
 // mdLinks('./archivos', { validate: false }).then((links) => {
 //   console.log(links);
