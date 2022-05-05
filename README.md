@@ -3,16 +3,20 @@
 ***
 ## 1. Resumen de la librería
 
-En este proyecto see creo una librería para hacer mas facil la identificacion de links que se encunetra en los archivos .md 
-donde nos mostrara cuantos link se encuentran en las carpetas iteradas si estan funcionales, si son unicos y si estan rotas 
-esta libreria te dara la estadistica.
+Esta librería se hizo para hacer más facil la identificacion de links que se encuentra en los archivos .md 
+de cualquier directorio, donde nos mostrará cuantos link se encuentran en las carpetas iteradas, si estan funcionales, si son únicos o si estan rotas las urls.
 
 
 ## md-links
-extrae los links de las carpetas .md
+extraer los links que estan en los archivos .md de los directorios
+
 ## Instalar librería
 
-npm install @leidytapias/md-links si estás usando Linux y esto falla trata anteponiendo sudo
+```sh
+npm i md-links-leidy
+```
+
+Si estás usando Linux y esto falla trata anteponiendo sudo
 
 ## Como usar 
 
