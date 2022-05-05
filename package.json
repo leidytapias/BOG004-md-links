@@ -1,6 +1,6 @@
 {
   "name": "md-links",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": "index.js",
   "engines": {
     "node": ">=14.x"
@@ -27,7 +27,7 @@
   },
   "scripts": {
     "eslint": "eslint --ext .js index.js js/ test/",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "bin": {
     "md-links": "./cli.js"
